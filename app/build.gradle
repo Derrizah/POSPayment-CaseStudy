@@ -79,5 +79,9 @@ dependencies {
 
     implementation 'androidx.lifecycle:lifecycle-viewmodel-ktx:2.5.1'
 
+    // Fragments
+    def fragments_version = "1.5.4"
+    implementation "androidx.fragment:fragment-ktx:$fragments_version"
+
     implementation 'com.google.zxing:core:3.4.0'
 }
