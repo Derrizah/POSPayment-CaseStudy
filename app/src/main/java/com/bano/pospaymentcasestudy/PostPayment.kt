@@ -21,15 +21,20 @@ package com.bano.pospaymentcasestudy
 //"QRdata":"00020153039495403100800201810200821912-01-2018 12:43:24830481-48608800-100#8712AT00000000018901184034178844secureqrsigniturewillbehereinthenearfuture1="
 
 data class PostPayment (
-    val returnCode: Int = 1000,
+    val returnCode: Int = 1,
     val returnDesc: String = "success",
     val receiptMsgCustomer: String = "beko Campaign/n2018",
     val receiptMsgMerchant: String = "beko Campaign Merchant/n2018",
-    val paymentInfoList: List<PaymentInfo>,
+//    val paymentInfoList: List<PaymentInfo>,
     val qrData: String,
 )
 
 data class PaymentInfo (
+    val paymentProcessorID: Int = 67,
+    val paymentActionList: List<PaymentAction>
+)
+
+data class PaymentAction(
     val paymentType: Int = 3,
     val amount: Int,
     val currencyID: Int = 949,

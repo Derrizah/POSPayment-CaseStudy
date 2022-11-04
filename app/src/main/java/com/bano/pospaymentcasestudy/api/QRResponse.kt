@@ -1,4 +1,4 @@
-package com.bano.pospaymentcasestudy
+package com.bano.pospaymentcasestudy.api
 
 data class QRResponse (
     val returnCode: Int,

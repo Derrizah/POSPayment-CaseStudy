@@ -1,8 +1,10 @@
-package com.bano.pospaymentcasestudy
+package com.bano.pospaymentcasestudy.db.payment
 
 import androidx.lifecycle.LiveData
 
-open class PaymentRepository private constructor(private val paymentDAO: PaymentDAO) {
+open class PaymentRepository(private val paymentDAO: PaymentDAO) {
+    val payments = paymentDAO.getAllPayments()
+
     companion object {
         @Volatile
         private var instance: PaymentRepository? = null
@@ -12,7 +14,12 @@ open class PaymentRepository private constructor(private val paymentDAO: Payment
             }
         }
     }
-    open fun getAllPayments(): LiveData<List<PaymentEntity>> {
+
+     open suspend fun insert(paymentEntity: Payment) : Long {
+         return paymentDAO.insertPayment(paymentEntity)
+     }
+
+    open suspend fun getAllPayments(): LiveData<List<Payment>> {
         return paymentDAO.getAllPayments()
     }
 }

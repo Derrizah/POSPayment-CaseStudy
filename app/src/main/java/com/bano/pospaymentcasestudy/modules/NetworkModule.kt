@@ -1,28 +1,41 @@
-package com.bano.pospaymentcasestudy
+package com.bano.pospaymentcasestudy.modules
 
+import com.bano.pospaymentcasestudy.api.PaymentService
+import dagger.Module
+import dagger.Provides
 import okhttp3.Interceptor
 import okhttp3.OkHttpClient
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import java.security.cert.X509Certificate
+import javax.inject.Singleton
+import javax.net.ssl.SSLContext
 import javax.net.ssl.TrustManager
 import javax.net.ssl.X509TrustManager
-import javax.net.ssl.SSLContext
 
+@Module
+class NetworkModule {
 
-object RetrofitHelper {
-    private const val baseUrl = "https://sandbox-api.payosy.com/api/"
+    @Singleton
+    @Provides
+    fun providePaymentService(retrofit: Retrofit) : PaymentService {
+        return retrofit.create(PaymentService::class.java)
+    }
 
-    fun getInstance(): Retrofit {
+    @Singleton
+    @Provides
+    fun provideRetrofit(okHttpClient: OkHttpClient): Retrofit {
         return Retrofit.Builder()
-            .baseUrl(baseUrl)
-            .client(getUnsafeOkHttpClient())
+            .baseUrl("https://sandbox-api.payosy.com/api/")
+            .client(okHttpClient)
             .addConverterFactory(GsonConverterFactory.create())
             // We need to add converter factory to convert JSON object to Java object
             .build()
     }
 
-    private fun getUnsafeOkHttpClient(): OkHttpClient {
+    @Singleton
+    @Provides
+    fun provideOkHttpClient(): OkHttpClient {
         // Create a trust manager that does not validate certificate chains
         val trustAllCerts = arrayOf<TrustManager>(object : X509TrustManager {
             override fun checkClientTrusted(chain: Array<out X509Certificate>?, authType: String?) {
@@ -55,5 +68,4 @@ object RetrofitHelper {
             }
             .build()
     }
-
 }

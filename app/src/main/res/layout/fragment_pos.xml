@@ -6,35 +6,53 @@
     android:layout_height="match_parent"
     tools:context=".POSFragment">
 
-    <Button
-        android:id="@+id/btnPay"
+    <TextView
+        android:id="@+id/fragment_title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="40dp"
-        android:layout_marginStart="34dp"
-        android:layout_marginTop="34dp"
-        android:text="@string/pay_w_qr"
-        android:textAllCaps="false"
+        android:layout_marginTop="10dp"
+        android:text="@string/pos_title"
+        android:textSize="20sp"
+        app:layout_constraintBottom_toTopOf="@+id/edit_text_amount"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toEndOf="@+id/etxtAmount"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ProgressBar
+        android:id="@+id/progress_bar"
+        style="?android:attr/progressBarStyle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:visibility="invisible"
+        app:layout_constraintBottom_toTopOf="@+id/button_pay"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/fragment_title"
         app:layout_constraintTop_toTopOf="parent" />
 
     <EditText
-        android:id="@+id/etxtAmount"
+        android:id="@+id/edit_text_amount"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="34dp"
-        android:layout_marginTop="36dp"
         android:ems="10"
         android:hint="@string/enter_amount"
         android:importantForAutofill="no"
         android:inputType="number"
-        app:layout_constraintEnd_toStartOf="@+id/btnPay"
-        app:layout_constraintHorizontal_bias="0.5"
+        android:minHeight="48dp"
+        app:layout_constraintEnd_toStartOf="@+id/button_pay"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/button_pay"
         tools:text="@string/enter_amount" />
+
+    <Button
+        android:id="@+id/button_pay"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/pay_w_qr"
+        android:textAllCaps="false"
+        app:layout_constraintTop_toBottomOf="@id/progress_bar"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/edit_text_amount" />
 
     <ImageView
         android:id="@+id/qr_image"
@@ -47,17 +65,19 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/etxtAmount"
+        app:layout_constraintTop_toBottomOf="@+id/edit_text_amount"
         app:layout_constraintVertical_bias="0.042" />
 
     <Button
-        android:id="@+id/btnGoToInfo"
+        android:id="@+id/button_go_to_info"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/go_to_interface"
         android:textAllCaps="false"
-        app:layout_constraintEnd_toEndOf="@+id/btnPay"
-        app:layout_constraintStart_toStartOf="@+id/btnPay"
-        app:layout_constraintTop_toBottomOf="@+id/btnPay" />
+        android:enabled="false"
+        android:clickable="false"
+        app:layout_constraintEnd_toEndOf="@+id/button_pay"
+        app:layout_constraintStart_toStartOf="@+id/button_pay"
+        app:layout_constraintTop_toBottomOf="@+id/button_pay" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

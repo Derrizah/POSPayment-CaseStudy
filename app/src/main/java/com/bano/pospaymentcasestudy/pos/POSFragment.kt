@@ -1,25 +1,28 @@
-package com.bano.pospaymentcasestudy
+package com.bano.pospaymentcasestudy.pos
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.fragment.app.add
+import android.widget.Button
 import androidx.fragment.app.commit
 import androidx.lifecycle.ViewModelProvider
+import com.bano.pospaymentcasestudy.api.QRForSale
+import com.bano.pospaymentcasestudy.base.observeOnce
+import com.bano.pospaymentcasestudy.customerInfo.CustomerInfoFragment
 import com.bano.pospaymentcasestudy.databinding.FragmentPosBinding
 
-// TODO: Rename parameter arguments, choose names that match
-// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
 private const val ARG_PARAM1 = "param1"
 private const val ARG_PARAM2 = "param2"
 
 class POSFragment : Fragment() {
-    lateinit var viewModel: PaymentViewModel
+    lateinit var viewModel: POSViewModel
     private lateinit var binding: FragmentPosBinding
 
-    // TODO: Rename and change types of parameters
+    private lateinit var payButton: Button
+    private lateinit var goToInfoButton: Button
+
     private var param1: String? = null
     private var param2: String? = null
 
@@ -43,27 +46,46 @@ class POSFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        viewModel = ViewModelProvider(requireActivity(), PaymentViewModelFactory(requireActivity()))[PaymentViewModel::class.java]
+        viewModel = ViewModelProvider(requireActivity(), POSViewModelFactory())[POSViewModel::class.java]
 
-        binding.btnPay.setOnClickListener(View.OnClickListener {
-            it.isEnabled = false
-            it.isClickable = false
+        payButton = binding.buttonPay
+        goToInfoButton = binding.buttonGoToInfo
+
+        payButton.setOnClickListener(View.OnClickListener {
+            activateLoading()
             viewModel.qrImage.observeOnce(viewLifecycleOwner, androidx.lifecycle.Observer{ bmp ->
                 binding.qrImage.setImageBitmap(bmp)
-                it.isEnabled = true
-                it.isClickable = true
+                deactivateLoading()
             })
-            viewModel.getQRCodeForSale(QRForSale(binding.etxtAmount.text.toString().toInt()))
+            viewModel.getQRCodeForSale(QRForSale(binding.editTextAmount.text.toString().toInt()))
         })
 
-        binding.btnGoToInfo.setOnClickListener(View.OnClickListener {
+        goToInfoButton.setOnClickListener(View.OnClickListener {
+            val customerInfoFragment = CustomerInfoFragment.newInstance(viewModel.receiptAmount.value!!, viewModel.qrString.value!!)
             activity?.supportFragmentManager?.commit {
                 setReorderingAllowed(true)
-                replace(binding.root.id, CustomerInfoFragment())
+                replace(((view as ViewGroup).parent as View).id, customerInfoFragment)
             }
         })
     }
+    private fun activateLoading() {
+        payButton.isEnabled = false
+        payButton.isClickable = false
 
+        goToInfoButton.isEnabled = false
+        goToInfoButton.isClickable = false
+
+        binding.progressBar.visibility = View.VISIBLE
+    }
+    private fun deactivateLoading() {
+        payButton.isEnabled = true
+        payButton.isClickable = true
+
+        goToInfoButton.isEnabled = true
+        goToInfoButton.isClickable = true
+
+        binding.progressBar.visibility = View.INVISIBLE
+    }
     companion object {
         /**
          * Use this factory method to create a new instance of

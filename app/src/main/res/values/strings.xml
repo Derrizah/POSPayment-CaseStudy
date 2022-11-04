@@ -7,4 +7,7 @@
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="proceed_payment">Ödemeyi Onayla</string>
     <string name="go_to_interface">Arayüze Git</string>
+    <string name="pos_title">POS Arayüzü</string>
+    <string name="customer_fragment">Müşteri Arayüzü</string>
+    <string name="return_to_pos">POS\'a Dön</string>
 </resources>

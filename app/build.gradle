@@ -34,6 +34,9 @@ android {
     buildFeatures {
         viewBinding = true
     }
+    dataBinding {
+        enabled = true
+    }
 }
 
 dependencies {
@@ -48,20 +51,8 @@ dependencies {
 
     def room_version = "2.4.3"
     implementation "androidx.room:room-runtime:$room_version"
+    implementation 'androidx.room:room-ktx:2.4.3'
     kapt "androidx.room:room-compiler:$room_version"
-
-    //Truth Assertion
-    testImplementation "com.google.truth:truth:1.1"
-
-    //Arch Core - InstantTaskExecutorRule
-    testImplementation "androidx.arch.core:core-testing:2.1.0"
-    //Mockito framework
-    testImplementation  'org.mockito:mockito-core:2.19.0'
-
-    //Espresso
-    androidTestImplementation 'androidx.test.espresso:espresso-core:3.4.0'
-    // Truth Assertion
-    androidTestImplementation "com.google.truth:truth:1.1"
 
     // Retrofit
     implementation 'com.squareup.retrofit2:retrofit:2.9.0'
@@ -78,10 +69,24 @@ dependencies {
     implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-core:1.6.1'
 
     implementation 'androidx.lifecycle:lifecycle-viewmodel-ktx:2.5.1'
+    implementation 'androidx.lifecycle:lifecycle-livedata-ktx:2.5.1'
 
     // Fragments
     def fragments_version = "1.5.4"
     implementation "androidx.fragment:fragment-ktx:$fragments_version"
 
     implementation 'com.google.zxing:core:3.4.0'
+
+    //Truth Assertion
+    testImplementation "com.google.truth:truth:1.1"
+
+    //Arch Core - InstantTaskExecutorRule
+    testImplementation "androidx.arch.core:core-testing:2.1.0"
+    //Mockito framework
+    testImplementation  'org.mockito:mockito-core:2.19.0'
+
+    //Espresso
+    androidTestImplementation 'androidx.test.espresso:espresso-core:3.4.0'
+    // Truth Assertion
+    androidTestImplementation "com.google.truth:truth:1.1"
 }
