@@ -3,8 +3,6 @@
     <string name="pay_w_qr">QR ile Öde</string>
     <string name="enter_amount">Tutarı giriniz</string>
     <string name="payment_history">Geçmiş Ödemeler</string>
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="proceed_payment">Ödemeyi Onayla</string>
     <string name="go_to_interface">Arayüze Git</string>
     <string name="pos_title">POS Arayüzü</string>

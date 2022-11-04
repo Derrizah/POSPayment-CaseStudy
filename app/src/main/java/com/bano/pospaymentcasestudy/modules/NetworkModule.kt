@@ -1,9 +1,9 @@
 package com.bano.pospaymentcasestudy.modules
 
-import com.bano.pospaymentcasestudy.api.PaymentService
+import com.bano.pospaymentcasestudy.api.OSYInterceptor
+import com.bano.pospaymentcasestudy.api.OSYService
 import dagger.Module
 import dagger.Provides
-import okhttp3.Interceptor
 import okhttp3.OkHttpClient
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
@@ -19,8 +19,8 @@ class NetworkModule {
 
     @Singleton
     @Provides
-    fun providePaymentService(retrofit: Retrofit): PaymentService {
-        return retrofit.create(PaymentService::class.java)
+    fun providePaymentService(retrofit: Retrofit): OSYService {
+        return retrofit.create(OSYService::class.java)
     }
 
     @Singleton
@@ -58,17 +58,7 @@ class NetworkModule {
             .sslSocketFactory(sslSocketFactory, trustAllCerts[0] as X509TrustManager)
             .hostnameVerifier { _, _ -> true }
             .apply {
-                addInterceptor(
-                    Interceptor { chain ->
-                        val builder = chain.request().newBuilder()
-                        builder.header("x-ibm-client-id", "d56a0277-2ee3-4ae5-97c8-467abeda984d")
-                        builder.header(
-                            "x-ibm-client-secret",
-                            "U1wY2tV5dU2rO7iF7qI7wI4sH8pF0vO8oQ2fE1iS5tU4vW5kO1"
-                        )
-                        return@Interceptor chain.proceed(builder.build())
-                    }
-                )
+                addInterceptor(OSYInterceptor())
                 addInterceptor(HttpLoggingInterceptor().apply {
                     level = HttpLoggingInterceptor.Level.BODY
                 })

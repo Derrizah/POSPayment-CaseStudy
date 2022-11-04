@@ -7,7 +7,7 @@ import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModel
-import com.bano.pospaymentcasestudy.api.PaymentService
+import com.bano.pospaymentcasestudy.api.OSYService
 import com.bano.pospaymentcasestudy.components.DaggerAppComponent
 import com.bano.pospaymentcasestudy.db.payment.PaymentRepository
 import com.bano.pospaymentcasestudy.modules.DatabaseModule
@@ -18,7 +18,7 @@ import javax.inject.Inject
 
 abstract class BaseViewModel : ViewModel() {
     @Inject
-    lateinit var paymentService: PaymentService
+    lateinit var paymentService: OSYService
 
     @Inject
     lateinit var paymentRepository: PaymentRepository

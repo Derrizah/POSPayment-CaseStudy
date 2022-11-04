@@ -8,7 +8,7 @@ import retrofit2.Response
 import retrofit2.http.Body
 import retrofit2.http.POST
 
-interface PaymentService {
+interface OSYService {
     @POST("get_qr_sale")
     suspend fun getQRForSale(@Body qrForSale: QRForSale): Response<QRForSaleResponse>
 
