@@ -1,14 +1,17 @@
 package com.bano.pospaymentcasestudy.base
 
+import android.content.Context
 import android.graphics.Bitmap
 import android.graphics.Color
 import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModel
-import com.bano.pospaymentcasestudy.components.DaggerAppComponent
 import com.bano.pospaymentcasestudy.api.PaymentService
+import com.bano.pospaymentcasestudy.components.DaggerAppComponent
 import com.bano.pospaymentcasestudy.db.payment.PaymentRepository
+import com.bano.pospaymentcasestudy.modules.DatabaseModule
+import com.bano.pospaymentcasestudy.modules.NetworkModule
 import com.google.zxing.BarcodeFormat
 import com.google.zxing.qrcode.QRCodeWriter
 import javax.inject.Inject
@@ -17,8 +20,13 @@ abstract class BaseViewModel: ViewModel() {
     @Inject
     lateinit var paymentService: PaymentService
 
-    fun init(){
-        DaggerAppComponent.create().inject(this)
+    @Inject
+    lateinit var paymentRepository: PaymentRepository
+
+    open fun inject(appContext: Context) {
+        DaggerAppComponent.builder()
+            .networkModule(NetworkModule()).databaseModule(DatabaseModule(appContext))
+            .build().inject(this)
     }
 
     fun getQRBitmap(string: String): Bitmap {

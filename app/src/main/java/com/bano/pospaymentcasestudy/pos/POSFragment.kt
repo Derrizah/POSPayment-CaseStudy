@@ -46,7 +46,7 @@ class POSFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        viewModel = ViewModelProvider(requireActivity(), POSViewModelFactory())[POSViewModel::class.java]
+        viewModel = ViewModelProvider(requireActivity(), POSViewModelFactory(requireActivity().applicationContext))[POSViewModel::class.java]
 
         payButton = binding.buttonPay
         goToInfoButton = binding.buttonGoToInfo

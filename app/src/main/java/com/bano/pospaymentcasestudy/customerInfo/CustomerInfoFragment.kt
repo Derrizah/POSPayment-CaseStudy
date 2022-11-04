@@ -16,6 +16,7 @@ private const val RECEIPT_AMOUNT = "RECEIPT_AMOUNT"
 private const val QR_DATA = "QR_DATA"
 
 class CustomerInfoFragment : Fragment() {
+
     lateinit var viewModel: CustomerInfoViewModel
     private lateinit var binding: FragmentCustomerInfoBinding
 
@@ -44,7 +45,8 @@ class CustomerInfoFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        viewModel = ViewModelProvider(requireActivity(), CustomerInfoViewModelFactory(requireActivity()))[CustomerInfoViewModel::class.java]
+        viewModel = ViewModelProvider(requireActivity(), CustomerInfoViewModelFactory(requireActivity().applicationContext))[CustomerInfoViewModel::class.java]
+
         initRecyclerView()
         binding.textAmount.text = "Ödenecek Tutar: " + receiptAmount.toString()
         binding.qrImage.setImageBitmap(viewModel.getQRBitmap(qrData!!))
