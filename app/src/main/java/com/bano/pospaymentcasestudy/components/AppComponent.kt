@@ -7,6 +7,10 @@ import com.bano.pospaymentcasestudy.modules.NetworkModule
 import dagger.Component
 import javax.inject.Singleton
 
+/**
+ * Handles injection of dependencies provided by NetworkModule and
+ * DatabaseModule
+ */
 @Singleton
 @Component(modules = [NetworkModule::class, DatabaseModule::class])
 interface AppComponent {

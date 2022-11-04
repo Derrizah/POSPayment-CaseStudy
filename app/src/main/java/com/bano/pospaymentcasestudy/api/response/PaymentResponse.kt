@@ -1,9 +1,14 @@
 package com.bano.pospaymentcasestudy.api.response
 
+import com.google.gson.annotations.SerializedName
+
+/**
+ * Data class used to receive payment response.
+ */
 data class PaymentResponse(
-    val applicationID: String,
-    val sessionID: String,
-    val posID: String,
-    val returnCode: Int,
-    val returnDesc: String
+    @SerializedName("applicationID") val applicationID: String,
+    @SerializedName("sessionID") val sessionID: String,
+    @SerializedName("posID") val posID: String,
+    @SerializedName("returnCode") val returnCode: Int,
+    @SerializedName("returnDesc") val returnDesc: String
 )

@@ -8,6 +8,9 @@ import com.bano.pospaymentcasestudy.R
 import com.bano.pospaymentcasestudy.databinding.ListHistoryItemBinding
 import com.bano.pospaymentcasestudy.db.payment.Payment
 
+/**
+ * Adapt data from payments table and show them in a recycler view
+ */
 class HistoryRecyclerViewAdapter : RecyclerView.Adapter<HistoryViewHolder>() {
     private val paymentList = ArrayList<Payment>()
 
@@ -22,6 +25,9 @@ class HistoryRecyclerViewAdapter : RecyclerView.Adapter<HistoryViewHolder>() {
         holder.bind(paymentList[position])
     }
 
+    /**
+     * Set list of payments
+     */
     fun setList(payments: List<Payment>) {
         paymentList.clear()
         paymentList.addAll(payments)
@@ -32,6 +38,9 @@ class HistoryRecyclerViewAdapter : RecyclerView.Adapter<HistoryViewHolder>() {
     }
 }
 
+/**
+ * Handles how each item of payment is shown
+ */
 class HistoryViewHolder(private val binding: ListHistoryItemBinding) :
     RecyclerView.ViewHolder(binding.root) {
     fun bind(payment: Payment) {

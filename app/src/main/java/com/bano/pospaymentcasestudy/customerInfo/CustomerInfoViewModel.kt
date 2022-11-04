@@ -1,7 +1,6 @@
 package com.bano.pospaymentcasestudy.customerInfo
 
 import android.content.Context
-import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
@@ -11,6 +10,10 @@ import com.bano.pospaymentcasestudy.db.payment.Payment
 import kotlinx.coroutines.launch
 import java.util.*
 
+/**
+ * ViewModel used by CustomerInfoFragment. Handles payments and gives
+ * access to payment database
+ */
 class CustomerInfoViewModel() : BaseViewModel() {
     //    val payments = paymentRepository.payments
     lateinit var payments: LiveData<List<Payment>>
@@ -22,9 +25,13 @@ class CustomerInfoViewModel() : BaseViewModel() {
         payments = paymentRepository.payments
     }
 
+    /**
+     * Post payment to backend service and, if successful, insert into
+     * payments table
+     */
     fun proceedPayment(qrString: String, receiptAmount: Int) {
         viewModelScope.launch {
-            val response = paymentService.postPayment(PostPayment(qrData = qrString))
+            val response = osyService.postPayment(PostPayment(qrData = qrString))
             if (response.isSuccessful) {
                 paymentComplete.value = true
 

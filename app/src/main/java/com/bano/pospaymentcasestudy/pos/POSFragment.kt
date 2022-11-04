@@ -16,6 +16,9 @@ import com.bano.pospaymentcasestudy.databinding.FragmentPosBinding
 private const val ARG_PARAM1 = "param1"
 private const val ARG_PARAM2 = "param2"
 
+/**
+ * Fragment to receive payment amount and display QR code
+ */
 class POSFragment : Fragment() {
     lateinit var viewModel: POSViewModel
     private lateinit var binding: FragmentPosBinding
@@ -54,6 +57,11 @@ class POSFragment : Fragment() {
         payButton = binding.buttonPay
         goToInfoButton = binding.buttonGoToInfo
 
+        setupPayButton()
+        setupGoToInfoButton()
+    }
+
+    private fun setupPayButton() {
         payButton.setOnClickListener(View.OnClickListener {
             activateLoading()
             viewModel.qrImage.observeOnce(viewLifecycleOwner, androidx.lifecycle.Observer { bmp ->
@@ -62,7 +70,9 @@ class POSFragment : Fragment() {
             })
             viewModel.getQRCodeForSale(QRForSale(binding.editTextAmount.text.toString().toInt()))
         })
+    }
 
+    private fun setupGoToInfoButton() {
         goToInfoButton.setOnClickListener(View.OnClickListener {
             val customerInfoFragment = CustomerInfoFragment.newInstance(
                 viewModel.receiptAmount.value!!,
@@ -75,6 +85,9 @@ class POSFragment : Fragment() {
         })
     }
 
+    /**
+     * Disables buttons and shows progress bar
+     */
     private fun activateLoading() {
         payButton.isEnabled = false
         payButton.isClickable = false
@@ -85,6 +98,9 @@ class POSFragment : Fragment() {
         binding.progressBar.visibility = View.VISIBLE
     }
 
+    /**
+     * Enables buttons and hides progress bar
+     */
     private fun deactivateLoading() {
         payButton.isEnabled = true
         payButton.isClickable = true

@@ -3,6 +3,9 @@ package com.bano.pospaymentcasestudy.api
 import okhttp3.Interceptor
 import okhttp3.Response
 
+/**
+ * Interceptor used to add authorization headers to HTTP requests
+ */
 class OSYInterceptor: Interceptor {
     override fun intercept(chain: Interceptor.Chain): Response {
         val builder = chain.request().newBuilder()

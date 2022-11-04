@@ -7,6 +7,9 @@ import androidx.fragment.app.commit
 import com.bano.pospaymentcasestudy.databinding.ActivityMainBinding
 import com.bano.pospaymentcasestudy.pos.POSFragment
 
+/**
+ * Shows fragments and opens POSFragment initially
+ */
 class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
 

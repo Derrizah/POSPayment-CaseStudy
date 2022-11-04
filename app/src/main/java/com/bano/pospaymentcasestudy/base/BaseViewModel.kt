@@ -16,19 +16,29 @@ import com.google.zxing.BarcodeFormat
 import com.google.zxing.qrcode.QRCodeWriter
 import javax.inject.Inject
 
+/**
+ * Base view model of the application. Has OSYService and PaymentRepository injected.
+ * Can create QRBitmap and makes it possible to observe variables for once
+ */
 abstract class BaseViewModel : ViewModel() {
     @Inject
-    lateinit var paymentService: OSYService
+    lateinit var osyService: OSYService
 
     @Inject
     lateinit var paymentRepository: PaymentRepository
 
+    /**
+     * Inject necessary variables
+     */
     open fun inject(appContext: Context) {
         DaggerAppComponent.builder()
             .networkModule(NetworkModule()).databaseModule(DatabaseModule(appContext))
             .build().inject(this)
     }
 
+    /**
+     * Get Bitmap from QR string
+     */
     fun getQRBitmap(string: String): Bitmap {
         val size = 512 //pixels
         val bits = QRCodeWriter().encode(string, BarcodeFormat.QR_CODE, size, size)
@@ -42,6 +52,9 @@ abstract class BaseViewModel : ViewModel() {
     }
 }
 
+/**
+ * Observe a LiveData for once.
+ */
 fun <T> MutableLiveData<T>.observeOnce(lifecycleOwner: LifecycleOwner, observer: Observer<T>) {
     observe(lifecycleOwner, object : Observer<T> {
         override fun onChanged(t: T?) {

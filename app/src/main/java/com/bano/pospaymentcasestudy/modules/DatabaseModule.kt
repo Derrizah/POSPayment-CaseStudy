@@ -7,21 +7,24 @@ import dagger.Module
 import dagger.Provides
 import javax.inject.Singleton
 
+/**
+ * Provides variables needed for dependency injection related to database
+ */
 @Module
 class DatabaseModule constructor(val context: Context) {
-    @Singleton // Tell Dagger-Hilt to create a singleton accessible everywhere in ApplicationCompenent (i.e. everywhere in the application)
+    @Singleton
     @Provides
     fun provideYourDatabase() =
         Room.databaseBuilder(
             context,
             PaymentDatabase::class.java,
             "payments_database"
-        ).build() // The reason we can construct a database for the repo
+        ).build()
 
     @Singleton
     @Provides
     fun provideYourDao(db: PaymentDatabase) =
-        db.getDao() // The reason we can implement a Dao for the database
+        db.getDao()
 
     @Provides
     fun context(): Context {

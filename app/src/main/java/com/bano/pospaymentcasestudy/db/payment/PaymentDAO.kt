@@ -6,6 +6,9 @@ import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
 
+/**
+ * Data Access Object handling payments table operations
+ */
 @Dao
 interface PaymentDAO {
     @Insert(onConflict = OnConflictStrategy.REPLACE)

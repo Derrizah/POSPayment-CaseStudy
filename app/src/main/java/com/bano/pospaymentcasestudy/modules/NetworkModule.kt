@@ -14,6 +14,9 @@ import javax.net.ssl.TrustManager
 import javax.net.ssl.X509TrustManager
 import okhttp3.logging.HttpLoggingInterceptor
 
+/**
+ * Provides variables needed for dependency injection related to network
+ */
 @Module
 class NetworkModule {
 
@@ -34,6 +37,9 @@ class NetworkModule {
             .build()
     }
 
+    /**
+     * Provides okHttpClient with disabled SSL verification and OSYInterceptor
+     */
     @Singleton
     @Provides
     fun provideOkHttpClient(): OkHttpClient {
