@@ -17,10 +17,6 @@ class POSViewModel : BaseViewModel() {
         receiptAmount.value = qrForSale.totalReceiptAmount
         viewModelScope.launch {
             val response = paymentService.getQRForSale(qrForSale)
-            Log.v("getQRCodeForSale",
-                "Response Code: " + response.code().toString() + " Response: " + response.body()
-                    .toString()
-            )
             if (response.isSuccessful) {
                 qrString.value = response.body()?.QRdata
                 qrImage.postValue(getQRBitmap(qrString.value!!))

@@ -25,10 +25,6 @@ class CustomerInfoViewModel() : BaseViewModel() {
     fun proceedPayment(qrString: String, receiptAmount: Int) {
         viewModelScope.launch {
             val response = paymentService.postPayment(PostPayment(qrData = qrString))
-            Log.v("proceedPayment",
-                "Response Code: " + response.code().toString() + " Response: " + response.body()
-                    .toString()
-            )
             if (response.isSuccessful) {
                 paymentComplete.value = true
 

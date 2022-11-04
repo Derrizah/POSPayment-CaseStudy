@@ -12,6 +12,7 @@ import javax.inject.Singleton
 import javax.net.ssl.SSLContext
 import javax.net.ssl.TrustManager
 import javax.net.ssl.X509TrustManager
+import okhttp3.logging.HttpLoggingInterceptor
 
 @Module
 class NetworkModule {
@@ -68,6 +69,9 @@ class NetworkModule {
                         return@Interceptor chain.proceed(builder.build())
                     }
                 )
+                addInterceptor(HttpLoggingInterceptor().apply {
+                    level = HttpLoggingInterceptor.Level.BODY
+                })
             }
             .build()
     }
