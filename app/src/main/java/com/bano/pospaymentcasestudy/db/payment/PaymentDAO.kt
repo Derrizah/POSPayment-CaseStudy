@@ -9,7 +9,7 @@ import androidx.room.Query
 @Dao
 interface PaymentDAO {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun insertPayment(paymentEntity: Payment) : Long
+    suspend fun insertPayment(paymentEntity: Payment): Long
 
     @Query("SELECT * FROM payments_database")
     fun getAllPayments(): LiveData<List<Payment>>

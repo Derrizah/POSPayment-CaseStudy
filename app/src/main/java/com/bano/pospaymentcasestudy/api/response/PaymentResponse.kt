@@ -1,6 +1,6 @@
-package com.bano.pospaymentcasestudy.api
+package com.bano.pospaymentcasestudy.api.response
 
-data class PaymentResponse (
+data class PaymentResponse(
     val applicationID: String,
     val sessionID: String,
     val posID: String,

@@ -5,7 +5,7 @@ import androidx.room.Entity
 import androidx.room.PrimaryKey
 
 @Entity(tableName = "payments_database")
-data class Payment (
+data class Payment(
     @PrimaryKey(autoGenerate = true)
     @ColumnInfo(name = "payment_id")
     val paymentID: Int,

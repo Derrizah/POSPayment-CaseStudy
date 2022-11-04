@@ -16,7 +16,7 @@ import com.google.zxing.BarcodeFormat
 import com.google.zxing.qrcode.QRCodeWriter
 import javax.inject.Inject
 
-abstract class BaseViewModel: ViewModel() {
+abstract class BaseViewModel : ViewModel() {
     @Inject
     lateinit var paymentService: PaymentService
 

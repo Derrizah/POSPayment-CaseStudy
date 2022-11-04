@@ -1,14 +1,14 @@
 package com.bano.pospaymentcasestudy.pos
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
+import androidx.fragment.app.Fragment
 import androidx.fragment.app.commit
 import androidx.lifecycle.ViewModelProvider
-import com.bano.pospaymentcasestudy.api.QRForSale
+import com.bano.pospaymentcasestudy.api.request.QRForSale
 import com.bano.pospaymentcasestudy.base.observeOnce
 import com.bano.pospaymentcasestudy.customerInfo.CustomerInfoFragment
 import com.bano.pospaymentcasestudy.databinding.FragmentPosBinding
@@ -46,14 +46,17 @@ class POSFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        viewModel = ViewModelProvider(requireActivity(), POSViewModelFactory(requireActivity().applicationContext))[POSViewModel::class.java]
+        viewModel = ViewModelProvider(
+            requireActivity(),
+            POSViewModelFactory(requireActivity().applicationContext)
+        )[POSViewModel::class.java]
 
         payButton = binding.buttonPay
         goToInfoButton = binding.buttonGoToInfo
 
         payButton.setOnClickListener(View.OnClickListener {
             activateLoading()
-            viewModel.qrImage.observeOnce(viewLifecycleOwner, androidx.lifecycle.Observer{ bmp ->
+            viewModel.qrImage.observeOnce(viewLifecycleOwner, androidx.lifecycle.Observer { bmp ->
                 binding.qrImage.setImageBitmap(bmp)
                 deactivateLoading()
             })
@@ -61,13 +64,17 @@ class POSFragment : Fragment() {
         })
 
         goToInfoButton.setOnClickListener(View.OnClickListener {
-            val customerInfoFragment = CustomerInfoFragment.newInstance(viewModel.receiptAmount.value!!, viewModel.qrString.value!!)
+            val customerInfoFragment = CustomerInfoFragment.newInstance(
+                viewModel.receiptAmount.value!!,
+                viewModel.qrString.value!!
+            )
             activity?.supportFragmentManager?.commit {
                 setReorderingAllowed(true)
                 replace(((view as ViewGroup).parent as View).id, customerInfoFragment)
             }
         })
     }
+
     private fun activateLoading() {
         payButton.isEnabled = false
         payButton.isClickable = false
@@ -77,6 +84,7 @@ class POSFragment : Fragment() {
 
         binding.progressBar.visibility = View.VISIBLE
     }
+
     private fun deactivateLoading() {
         payButton.isEnabled = true
         payButton.isClickable = true
@@ -86,6 +94,7 @@ class POSFragment : Fragment() {
 
         binding.progressBar.visibility = View.INVISIBLE
     }
+
     companion object {
         /**
          * Use this factory method to create a new instance of

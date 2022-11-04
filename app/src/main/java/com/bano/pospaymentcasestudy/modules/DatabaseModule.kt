@@ -13,14 +13,15 @@ class DatabaseModule constructor(val context: Context) {
     @Provides
     fun provideYourDatabase() =
         Room.databaseBuilder(
-        context,
-        PaymentDatabase::class.java,
-        "payments_database"
-    ).build() // The reason we can construct a database for the repo
+            context,
+            PaymentDatabase::class.java,
+            "payments_database"
+        ).build() // The reason we can construct a database for the repo
 
     @Singleton
     @Provides
-    fun provideYourDao(db: PaymentDatabase) = db.getDao() // The reason we can implement a Dao for the database
+    fun provideYourDao(db: PaymentDatabase) =
+        db.getDao() // The reason we can implement a Dao for the database
 
     @Provides
     fun context(): Context {

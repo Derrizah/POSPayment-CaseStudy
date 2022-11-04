@@ -5,14 +5,14 @@ import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
-import com.bano.pospaymentcasestudy.PostPayment
+import com.bano.pospaymentcasestudy.api.request.PostPayment
 import com.bano.pospaymentcasestudy.base.BaseViewModel
 import com.bano.pospaymentcasestudy.db.payment.Payment
 import kotlinx.coroutines.launch
 import java.util.*
 
-class CustomerInfoViewModel(): BaseViewModel() {
-//    val payments = paymentRepository.payments
+class CustomerInfoViewModel() : BaseViewModel() {
+    //    val payments = paymentRepository.payments
     lateinit var payments: LiveData<List<Payment>>
 
     var paymentComplete: MutableLiveData<Boolean> = MutableLiveData()
@@ -21,20 +21,25 @@ class CustomerInfoViewModel(): BaseViewModel() {
         super.inject(appContext)
         payments = paymentRepository.payments
     }
-    fun proceedPayment(qrString: String, receiptAmount: Int){
+
+    fun proceedPayment(qrString: String, receiptAmount: Int) {
         viewModelScope.launch {
             val response = paymentService.postPayment(PostPayment(qrData = qrString))
-            Log.v("proceedPayment", "Response Code: " + response.code().toString() + " Response: " + response.body().toString())
-            if(response.isSuccessful) {
+            Log.v("proceedPayment",
+                "Response Code: " + response.code().toString() + " Response: " + response.body()
+                    .toString()
+            )
+            if (response.isSuccessful) {
                 paymentComplete.value = true
 
                 paymentRepository.insert(
                     Payment(
-                    0,
-                    receiptAmount,
-                    Calendar.getInstance().time.toString(),
-                    response.body()!!.sessionID,
-                    qrString)
+                        0,
+                        receiptAmount,
+                        Date().time.toString(),
+                        response.body()!!.sessionID,
+                        qrString
+                    )
                 )
             }
         }

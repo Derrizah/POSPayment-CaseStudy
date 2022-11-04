@@ -1,14 +1,13 @@
 package com.bano.pospaymentcasestudy.customerInfo
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.bano.pospaymentcasestudy.HistoryRecyclerViewAdapter
 import com.bano.pospaymentcasestudy.base.observeOnce
 import com.bano.pospaymentcasestudy.databinding.FragmentCustomerInfoBinding
 
@@ -45,7 +44,10 @@ class CustomerInfoFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        viewModel = ViewModelProvider(requireActivity(), CustomerInfoViewModelFactory(requireActivity().applicationContext))[CustomerInfoViewModel::class.java]
+        viewModel = ViewModelProvider(
+            requireActivity(),
+            CustomerInfoViewModelFactory(requireActivity().applicationContext)
+        )[CustomerInfoViewModel::class.java]
 
         initRecyclerView()
         binding.textAmount.text = "Ödenecek Tutar: " + receiptAmount.toString()
@@ -55,8 +57,8 @@ class CustomerInfoFragment : Fragment() {
             binding.progressBar.visibility = View.VISIBLE
             binding.buttonProceed.isClickable = false
             binding.buttonProceed.isEnabled = false
-            viewModel.paymentComplete.observeOnce(viewLifecycleOwner, Observer{
-                if(it) {
+            viewModel.paymentComplete.observeOnce(viewLifecycleOwner, Observer {
+                if (it) {
                     binding.checkboxImage.visibility = View.VISIBLE
                     binding.progressBar.visibility = View.INVISIBLE
                 }
@@ -64,12 +66,15 @@ class CustomerInfoFragment : Fragment() {
             viewModel.proceedPayment(qrData!!, receiptAmount!!)
         })
     }
+
     private fun initRecyclerView() {
-        binding.historyRecyclerView.layoutManager = LinearLayoutManager(requireActivity().applicationContext)
+        binding.historyRecyclerView.layoutManager =
+            LinearLayoutManager(requireActivity().applicationContext)
         adapter = HistoryRecyclerViewAdapter()
         binding.historyRecyclerView.adapter = adapter
         displaySubscribersList()
     }
+
     private fun displaySubscribersList() {
         viewModel.payments.observe(viewLifecycleOwner, Observer {
             adapter.setList(it)

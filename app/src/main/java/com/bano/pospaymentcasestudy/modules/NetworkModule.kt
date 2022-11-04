@@ -18,7 +18,7 @@ class NetworkModule {
 
     @Singleton
     @Provides
-    fun providePaymentService(retrofit: Retrofit) : PaymentService {
+    fun providePaymentService(retrofit: Retrofit): PaymentService {
         return retrofit.create(PaymentService::class.java)
     }
 
@@ -61,7 +61,10 @@ class NetworkModule {
                     Interceptor { chain ->
                         val builder = chain.request().newBuilder()
                         builder.header("x-ibm-client-id", "d56a0277-2ee3-4ae5-97c8-467abeda984d")
-                        builder.header("x-ibm-client-secret", "U1wY2tV5dU2rO7iF7qI7wI4sH8pF0vO8oQ2fE1iS5tU4vW5kO1")
+                        builder.header(
+                            "x-ibm-client-secret",
+                            "U1wY2tV5dU2rO7iF7qI7wI4sH8pF0vO8oQ2fE1iS5tU4vW5kO1"
+                        )
                         return@Interceptor chain.proceed(builder.build())
                     }
                 )

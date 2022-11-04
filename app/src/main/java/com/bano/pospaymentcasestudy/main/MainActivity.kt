@@ -1,14 +1,11 @@
-package com.bano.pospaymentcasestudy
+package com.bano.pospaymentcasestudy.main
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.add
 import androidx.fragment.app.commit
-import androidx.lifecycle.ViewModelProvider
-import com.bano.pospaymentcasestudy.api.PaymentService
 import com.bano.pospaymentcasestudy.databinding.ActivityMainBinding
 import com.bano.pospaymentcasestudy.pos.POSFragment
-import javax.inject.Inject
 
 class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
