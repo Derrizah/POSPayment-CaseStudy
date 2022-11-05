@@ -7,14 +7,14 @@ MVVM, Retrofit, Dagger, Room, Fragment, Truth, Mockito, Espresso
 ## Kullanım
 Uygulama açıldığında MainActivity POSFragment'ı açar.<br>
 Kullanıcı burada ödeme tutarını girer ve "QR ile Öde" tuşuna basar.<br>
-Ödeme tutarı OSY-QR servisine yollar.<br>
+Ödeme tutarı OSY-QR servisine yollanır.<br>
 Gelen cevaba göre QR kodu çizer ve gösterir.<br>
 Bu işlem sonucunda "Arayüze Git" tuşu aktifleşir.<br>
 <br>
-CustomerInfoFragment açılır ve müşteri arayüzüne gidilmiş olur.<br>
+Tuşa basıldığında CustomerInfoFragment açılır ve müşteri arayüzüne gidilmiş olur.<br>
 Son yapılan ödeme tutarı ve bu ödemenin QR kodu gösterilir.<br>
 "Ödemeyi Onayla" tuşuna basarak ödeme miktarını ve QR kodu OSY-QR servisine yollar.<br>
-Servis, ödemenin onaylandığına dair cevap döndüğünde onaylama tuşu deaktif hale gelir ve tik resmi gözükür.<br>
+Servis, cevap döndüğünde onaylama tuşu deaktif hale gelir ve tik resmi gözükür.<br>
 Ödemenin onaylanmasıyla beraber bu ödeme veritabanına kaydedilir.<br>
 Bu ödeme ve geçmişteki ödemeler ekranın aşağısında bulunan listede gözükmektedir.<br>
 <br>
@@ -54,6 +54,8 @@ Backend servisle haberleşmeyi sağlayan servis<br>
 ### Base
 #### BaseViewModel
 Base View Model sınıfı. OSY Servisi ve database repository objelerini Dagger yoluyla alıp tutar. String ile QR Bitmap oluşturma fonksiyonunu içerir. Aynı zamanda view model'daki LiveData'ların tek seferliğine observe edilmesini sağlayan extension da buradadır.<br>
+#### BaseFragment
+Base Fragment sınıfı. ViewBinding ve BaseViewModel'a göre fragmentı hazırlar. View bindingin kurulmasını ve gerekli Base View Model'in oluşturulmasını sağlar.
 ### Components
 #### AppComponent
 Dependency injection yapan Dagger'ın komponentidir. DI işlemlerini bu interface yapar. Kullandığı modüller @Component içinde belirtilmiştir. BaseViewModel'a enjekte eden budur.<br>
