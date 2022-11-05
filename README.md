@@ -53,7 +53,7 @@ Servise gönderilen HTTP isteklerine yetkilendirme headerlarını ekleyen interc
 Backend servisle haberleşmeyi sağlayan servis<br>
 ### Base
 #### BaseActivity
-Base Activity sınıfı. ViewBinding'e göre activity'yi hazırlar.
+Base Activity sınıfı. ViewBinding'e göre activity'yi hazırlar.<br>
 #### BaseViewModel
 Base View Model sınıfı. OSY Servisi ve database repository objelerini Dagger yoluyla alıp tutar. String ile QR Bitmap oluşturma fonksiyonunu içerir. Aynı zamanda view model'daki LiveData'ların tek seferliğine observe edilmesini sağlayan extension da buradadır.<br>
 #### BaseFragment
