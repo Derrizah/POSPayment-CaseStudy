@@ -16,7 +16,7 @@ import java.util.*
  * ViewModel used by CustomerInfoFragment. Handles payments and gives
  * access to payment database
  */
-open class CustomerInfoViewModel : BaseViewModel() {
+class CustomerInfoViewModel : BaseViewModel() {
     lateinit var payments: LiveData<List<Payment>>
 
     var paymentComplete: MutableLiveData<Boolean> = MutableLiveData()
@@ -33,28 +33,31 @@ open class CustomerInfoViewModel : BaseViewModel() {
      * Post payment to backend service and, if successful, insert into
      * payments table
      */
-    fun proceedPayment(qrString: String, receiptAmount: Int) {
+    fun proceedPayment(qrString: String, receiptAmount: Float) {
         viewModelScope.launch {
             val response = osyService.postPayment(PostPayment(qrData = qrString))
             lastResponse.postValue(response.body())
             if (response.isSuccessful) {
                 paymentComplete.value = true
-                addLastPayment(receiptAmount, response.body()!!.sessionID, qrString)
+                addIntoRepo((receiptAmount * 100).toInt(), response.body()!!.sessionID, qrString)
             }
         }
     }
 
-    open fun addLastPayment(amount: Int, session: String, qr: String) {
+    /**
+     * Creates Payment based on provided values and triggers insertion
+     */
+    fun addIntoRepo(amount: Int, session: String, qr: String) {
+        val payment = Payment(
+            0,
+            amount,
+            SimpleDateFormat("MM-dd-yyyy hh:mm:ss").format(Calendar.getInstance().time),
+            session,
+            qr
+        )
+        lastInsertedPayment.value = payment
         viewModelScope.launch {
-            val payment = Payment(
-                0,
-                amount,
-                SimpleDateFormat("MM-dd-yyyy hh:mm:ss").format(Calendar.getInstance().time),
-                session,
-                qr
-            )
             paymentRepository.insert(payment)
-            lastInsertedPayment.postValue(payment)
         }
     }
 }

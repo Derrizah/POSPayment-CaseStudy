@@ -6,14 +6,14 @@ import javax.inject.Inject
 /**
  * Triggers payments database operations on DAO
  */
-open class PaymentRepository @Inject constructor(private val paymentDAO: PaymentDAO) {
+class PaymentRepository @Inject constructor(private val paymentDAO: PaymentDAO) {
     val payments = paymentDAO.getAllPayments()
 
-    open suspend fun insert(paymentEntity: Payment): Long {
+    suspend fun insert(paymentEntity: Payment): Long {
         return paymentDAO.insertPayment(paymentEntity)
     }
 
-    open suspend fun getAllPayments(): LiveData<List<Payment>> {
+    suspend fun getAllPayments(): LiveData<List<Payment>> {
         return paymentDAO.getAllPayments()
     }
 }

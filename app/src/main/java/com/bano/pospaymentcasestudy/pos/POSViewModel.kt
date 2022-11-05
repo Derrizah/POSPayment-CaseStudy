@@ -16,10 +16,14 @@ class POSViewModel : BaseViewModel() {
     var receiptAmount: MutableLiveData<Int> = MutableLiveData()
     var qrString: MutableLiveData<String> = MutableLiveData()
 
-    fun getQRCodeForSale(qrForSale: QRForSale) {
-        receiptAmount.value = qrForSale.totalReceiptAmount
+    /**
+     * Request a QR code based on the amount
+     */
+    fun getQRCodeForSale(amount: Float) {
+        val realAmount = (amount * 100).toInt()
+        receiptAmount.value = realAmount
         viewModelScope.launch {
-            val response = osyService.getQRForSale(qrForSale)
+            val response = osyService.getQRForSale(QRForSale(realAmount))
             if (response.isSuccessful) {
                 qrString.value = response.body()?.QRdata
                 qrImage.postValue(getQRBitmap(qrString.value!!))

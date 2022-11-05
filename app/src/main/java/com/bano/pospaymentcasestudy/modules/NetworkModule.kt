@@ -19,7 +19,7 @@ import javax.net.ssl.X509TrustManager
  * Provides variables needed for dependency injection related to network
  */
 @Module
-open class NetworkModule {
+class NetworkModule {
 
     @Singleton
     @Provides

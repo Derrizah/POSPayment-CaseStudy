@@ -24,13 +24,13 @@ class CustomerInfoFragment : BaseFragment<FragmentCustomerInfoBinding, CustomerI
 
     private lateinit var adapter: HistoryRecyclerViewAdapter
 
-    private var receiptAmount: Int? = null
+    private var receiptAmount: Float? = null
     private var qrData: String? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         arguments?.let {
-            receiptAmount = it.getInt(RECEIPT_AMOUNT)
+            receiptAmount = it.getFloat(RECEIPT_AMOUNT)
             qrData = it.getString(QR_DATA)
         }
     }
@@ -40,7 +40,7 @@ class CustomerInfoFragment : BaseFragment<FragmentCustomerInfoBinding, CustomerI
 
         initRecyclerView()
         binding.textAmount.text =
-            "Ödenecek Tutar:\n" + DecimalFormat("#.##").format(receiptAmount!!.toDouble() / 100) + " TL"
+            "Ödenecek Tutar:\n" + DecimalFormat("#.##").format(receiptAmount!!) + " TL"
         binding.qrImage.setImageBitmap(viewModel.getQRBitmap(qrData!!))
 
         binding.buttonProceed.setOnClickListener(View.OnClickListener {
@@ -101,10 +101,10 @@ class CustomerInfoFragment : BaseFragment<FragmentCustomerInfoBinding, CustomerI
          * @return A new instance of fragment CustomerInfoFragment.
          */
         @JvmStatic
-        fun newInstance(amount: Int, qrString: String) =
+        fun newInstance(amount: Float, qrString: String) =
             CustomerInfoFragment().apply {
                 arguments = Bundle().apply {
-                    putInt(RECEIPT_AMOUNT, amount)
+                    putFloat(RECEIPT_AMOUNT, amount)
                     putString(QR_DATA, qrString)
                 }
             }

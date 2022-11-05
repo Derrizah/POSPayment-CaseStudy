@@ -11,7 +11,6 @@ import androidx.test.espresso.matcher.BoundedMatcher
 import androidx.test.espresso.matcher.ViewMatchers.*
 import androidx.test.ext.junit.rules.ActivityScenarioRule
 import androidx.test.ext.junit.runners.AndroidJUnit4
-import com.bano.pospaymentcasestudy.R
 import com.bano.pospaymentcasestudy.main.MainActivity
 import org.hamcrest.CoreMatchers.containsString
 import org.hamcrest.Description
@@ -20,18 +19,20 @@ import org.hamcrest.Matchers
 import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
-import java.text.DecimalFormat
 
 
 @RunWith(AndroidJUnit4::class)
 class MainActivityTest {
     @get:Rule
-    var activityRule: ActivityScenarioRule<MainActivity>
-            = ActivityScenarioRule(MainActivity::class.java)
+    var activityRule: ActivityScenarioRule<MainActivity> =
+        ActivityScenarioRule(MainActivity::class.java)
 
     @Test
     fun testPOSFragmentFlow() {
-        onView(withId(R.id.edit_text_amount)).perform(ViewActions.typeText("100"), ViewActions.closeSoftKeyboard())
+        onView(withId(R.id.edit_text_amount)).perform(
+            ViewActions.typeText("100"),
+            ViewActions.closeSoftKeyboard()
+        )
         onView(withId(R.id.button_pay)).perform(ViewActions.click())
         onView(withId(R.id.edit_text_amount)).check(ViewAssertions.matches(Matchers.not(withText(""))))
         onView(withId(R.id.button_go_to_info)).perform(ViewActions.click())
@@ -40,20 +41,32 @@ class MainActivityTest {
     @Test
     fun testCustomerInfoFragmentReceiptAmount() {
         val stringToBeTyped = "100"
-        val stringToBeShown = DecimalFormat("#.##").format(stringToBeTyped.toDouble()/100)
-        onView(withId(R.id.edit_text_amount)).perform(ViewActions.typeText(stringToBeTyped), ViewActions.closeSoftKeyboard())
+        onView(withId(R.id.edit_text_amount)).perform(
+            ViewActions.typeText(stringToBeTyped),
+            ViewActions.closeSoftKeyboard()
+        )
         onView(withId(R.id.button_pay)).perform(ViewActions.click())
         Thread.sleep(1500);
         onView(withId(R.id.button_go_to_info)).perform(ViewActions.click())
         Thread.sleep(1500);
-        onView(withId(R.id.text_amount)).check(ViewAssertions.matches(withText(containsString(stringToBeShown))))
+        onView(withId(R.id.text_amount)).check(
+            ViewAssertions.matches(
+                withText(
+                    containsString(
+                        stringToBeTyped
+                    )
+                )
+            )
+        )
     }
 
     @Test
     fun testCustomerInfoFragmentPaymentHistory() {
         val stringToBeTyped = "123"
-        val stringToBeShown = DecimalFormat("#.##").format(stringToBeTyped.toDouble()/100)
-        onView(withId(R.id.edit_text_amount)).perform(ViewActions.typeText(stringToBeTyped), ViewActions.closeSoftKeyboard())
+        onView(withId(R.id.edit_text_amount)).perform(
+            ViewActions.typeText(stringToBeTyped),
+            ViewActions.closeSoftKeyboard()
+        )
         onView(withId(R.id.button_pay)).perform(ViewActions.click())
         Thread.sleep(1500);
         onView(withId(R.id.button_go_to_info)).perform(ViewActions.click())
@@ -61,10 +74,13 @@ class MainActivityTest {
         onView(withId(R.id.button_proceed)).perform(ViewActions.click())
         Thread.sleep(1500);
         onView(withId(R.id.history_recycler_view))
-            .check(matches(atPosition(0, hasDescendant(withText(containsString(stringToBeShown))))))
+            .check(matches(atPosition(0, hasDescendant(withText(containsString(stringToBeTyped))))))
     }
 }
 
+/**
+ * Work at the position of recyclerview
+ */
 fun atPosition(position: Int, @NonNull itemMatcher: Matcher<View?>): Matcher<View?>? {
     checkNotNull(itemMatcher)
     return object : BoundedMatcher<View?, RecyclerView>(RecyclerView::class.java) {

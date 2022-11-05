@@ -18,6 +18,19 @@ Servis, ödemenin onaylandığına dair cevap döndüğünde onaylama tuşu deak
 Ödemenin onaylanmasıyla beraber bu ödeme veritabanına kaydedilir.<br>
 Bu ödeme ve geçmişteki ödemeler ekranın aşağısında bulunan listede gözükmektedir.<br>
 <br>
+## Testler
+### Instrumentation Test
+#### MainActivityTest
+Fragmentların çalışma akışlarını ve doğru değerlerin gösterilip gösterilmediğini kontrol eden testler.<br>
+testPOSFragmentFlow: POS arayüzünün normal kullanım testi<br>
+testCustomerInfoFragmentReceiptAmount: POS arayüzünde girilen miktarın müşteri arayüzünde doğru gösterildiğini kontrol eder<br>
+testCustomerInfoFragmentPaymentHistory: Onaylanan ödemenin doğru bir şekilde geçmişe kaydedildiğini kontrol eder<br>
+### Unit Test
+#### POSViewModelTest
+verifyReceiptAmount: Ödeme miktarının QR isteği atıldıktan sonra doğru kaldığını kontrol eder<br>
+#### CustomerInfoViewModelTest
+verifyPaymentAdd: Ödemenin veritabanına doğru kaydedildiğini test eder<br>
+verifyPaymentResponse: Ödeme isteğine karşılık beklenen cevabın döndüğünü test eder<br>
 ## Kodların Genel Açıklamaları
 ### API
 #### Request

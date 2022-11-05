@@ -5,10 +5,10 @@ import android.text.TextUtils
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.WindowManager
 import android.widget.Button
 import android.widget.Toast
 import androidx.fragment.app.commit
-import com.bano.pospaymentcasestudy.api.request.QRForSale
 import com.bano.pospaymentcasestudy.base.BaseFragment
 import com.bano.pospaymentcasestudy.base.observeOnce
 import com.bano.pospaymentcasestudy.customerInfo.CustomerInfoFragment
@@ -30,6 +30,7 @@ class POSFragment : BaseFragment<FragmentPosBinding, POSViewModel>() {
 
         setupPayButton()
         setupGoToInfoButton()
+        openSoftKeyboard()
     }
 
     private fun setupPayButton() {
@@ -50,7 +51,7 @@ class POSFragment : BaseFragment<FragmentPosBinding, POSViewModel>() {
                         ).show()
                         deactivateLoading()
                     })
-                viewModel.getQRCodeForSale(QRForSale(enteredAmount.toInt()))
+                viewModel.getQRCodeForSale(enteredAmount.toFloat())
             }
         })
     }
@@ -58,7 +59,7 @@ class POSFragment : BaseFragment<FragmentPosBinding, POSViewModel>() {
     private fun setupGoToInfoButton() {
         goToInfoButton.setOnClickListener(View.OnClickListener {
             val customerInfoFragment = CustomerInfoFragment.newInstance(
-                viewModel.receiptAmount.value!!,
+                viewModel.receiptAmount.value!!.toFloat() / 100,
                 viewModel.qrString.value!!
             )
             activity?.supportFragmentManager?.commit {
@@ -92,6 +93,14 @@ class POSFragment : BaseFragment<FragmentPosBinding, POSViewModel>() {
         goToInfoButton.isClickable = true
 
         binding.progressBar.visibility = View.INVISIBLE
+    }
+
+    /**
+     * Requests focus on EditText and opens soft keyboard
+     */
+    private fun openSoftKeyboard() {
+        binding.editTextAmount.requestFocus()
+        activity?.window?.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_VISIBLE)
     }
 
     companion object {

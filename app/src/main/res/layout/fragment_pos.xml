@@ -37,7 +37,7 @@
         android:ems="10"
         android:hint="@string/enter_amount"
         android:importantForAutofill="no"
-        android:inputType="number"
+        android:inputType="numberDecimal"
         android:minHeight="48dp"
         app:layout_constraintEnd_toStartOf="@+id/button_pay"
         app:layout_constraintStart_toStartOf="parent"
