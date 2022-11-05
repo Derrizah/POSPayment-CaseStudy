@@ -33,6 +33,9 @@ class POSFragment : BaseFragment<FragmentPosBinding, POSViewModel>() {
         openSoftKeyboard()
     }
 
+    /**
+     * Adds functionality to Pay Button
+     */
     private fun setupPayButton() {
         payButton.setOnClickListener(View.OnClickListener {
             val enteredAmount = binding.editTextAmount.text.toString()
@@ -56,6 +59,9 @@ class POSFragment : BaseFragment<FragmentPosBinding, POSViewModel>() {
         })
     }
 
+    /**
+     * Adds functionality to Go To Info Button
+     */
     private fun setupGoToInfoButton() {
         goToInfoButton.setOnClickListener(View.OnClickListener {
             val customerInfoFragment = CustomerInfoFragment.newInstance(

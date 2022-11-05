@@ -17,8 +17,6 @@ import kotlinx.coroutines.test.*
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
-import org.junit.rules.TestWatcher
-import org.junit.runner.Description
 import org.junit.runner.RunWith
 import org.mockito.Mock
 import org.mockito.Mockito
@@ -56,7 +54,7 @@ class CustomerInfoViewModelTest {
     }
 
     @Test
-    fun verifyPaymentAdd(){
+    fun verifyPaymentAdd() {
         val amount = 100
         val session = "12345"
         val qr = "54321"

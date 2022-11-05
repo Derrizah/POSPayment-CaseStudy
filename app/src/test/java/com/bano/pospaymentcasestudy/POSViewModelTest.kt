@@ -3,7 +3,6 @@ package com.bano.pospaymentcasestudy
 import android.content.Context
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import androidx.lifecycle.Observer
-import com.bano.pospaymentcasestudy.api.request.QRForSale
 import com.bano.pospaymentcasestudy.pos.POSViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi

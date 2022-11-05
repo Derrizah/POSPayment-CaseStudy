@@ -39,10 +39,35 @@ class CustomerInfoFragment : BaseFragment<FragmentCustomerInfoBinding, CustomerI
         super.onViewCreated(view, savedInstanceState)
 
         initRecyclerView()
+        showDataFromPOS()
+        setUpProceedButton()
+        setUpGoToPOSButton()
+    }
+
+    /**
+     * Initializes recycler view with adapter
+     */
+    private fun initRecyclerView() {
+        binding.historyRecyclerView.layoutManager =
+            LinearLayoutManager(requireActivity().applicationContext)
+        adapter = HistoryRecyclerViewAdapter()
+        binding.historyRecyclerView.adapter = adapter
+        displayPaymentHistory()
+    }
+
+    /**
+     * Shows data received from POS
+     */
+    private fun showDataFromPOS() {
         binding.textAmount.text =
             "Ödenecek Tutar:\n" + DecimalFormat("#.##").format(receiptAmount!!) + " TL"
         binding.qrImage.setImageBitmap(viewModel.getQRBitmap(qrData!!))
+    }
 
+    /**
+     * Adds functionality to Proceed Button
+     */
+    private fun setUpProceedButton() {
         binding.buttonProceed.setOnClickListener(View.OnClickListener {
             binding.progressBar.visibility = View.VISIBLE
             binding.buttonProceed.isClickable = false
@@ -61,7 +86,12 @@ class CustomerInfoFragment : BaseFragment<FragmentCustomerInfoBinding, CustomerI
             })
             viewModel.proceedPayment(qrData!!, receiptAmount!!)
         })
+    }
 
+    /**
+     * Adds functionality to Go To POS Button
+     */
+    private fun setUpGoToPOSButton() {
         binding.buttonGoToPos.setOnClickListener(View.OnClickListener {
             activity?.supportFragmentManager?.commit {
                 setReorderingAllowed(true)
@@ -71,18 +101,7 @@ class CustomerInfoFragment : BaseFragment<FragmentCustomerInfoBinding, CustomerI
     }
 
     /**
-     * Initialize recycler view with adapter
-     */
-    private fun initRecyclerView() {
-        binding.historyRecyclerView.layoutManager =
-            LinearLayoutManager(requireActivity().applicationContext)
-        adapter = HistoryRecyclerViewAdapter()
-        binding.historyRecyclerView.adapter = adapter
-        displayPaymentHistory()
-    }
-
-    /**
-     * Observe and display payment history
+     * Observes and displays payment history
      */
     private fun displayPaymentHistory() {
         viewModel.payments.observe(viewLifecycleOwner, Observer {
