@@ -7,6 +7,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bano.pospaymentcasestudy.R
 import com.bano.pospaymentcasestudy.databinding.ListHistoryItemBinding
 import com.bano.pospaymentcasestudy.db.payment.Payment
+import java.util.Collections
 
 /**
  * Adapt data from payments table and show them in a recycler view
@@ -31,6 +32,7 @@ class HistoryRecyclerViewAdapter : RecyclerView.Adapter<HistoryViewHolder>() {
     fun setList(payments: List<Payment>) {
         paymentList.clear()
         paymentList.addAll(payments)
+        paymentList.reverse()
     }
 
     override fun getItemCount(): Int {

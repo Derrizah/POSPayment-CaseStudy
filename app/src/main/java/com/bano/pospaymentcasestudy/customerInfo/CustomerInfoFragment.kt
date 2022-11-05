@@ -13,6 +13,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.bano.pospaymentcasestudy.base.observeOnce
 import com.bano.pospaymentcasestudy.databinding.FragmentCustomerInfoBinding
 import com.bano.pospaymentcasestudy.pos.POSFragment
+import com.bano.pospaymentcasestudy.main.ViewModelFactory
 
 private const val RECEIPT_AMOUNT = "RECEIPT_AMOUNT"
 private const val QR_DATA = "QR_DATA"
@@ -52,7 +53,7 @@ class CustomerInfoFragment : Fragment() {
 
         viewModel = ViewModelProvider(
             requireActivity(),
-            CustomerInfoViewModelFactory(requireActivity().applicationContext)
+            ViewModelFactory(requireActivity().applicationContext)
         )[CustomerInfoViewModel::class.java]
 
         initRecyclerView()

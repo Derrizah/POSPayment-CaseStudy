@@ -49,8 +49,6 @@ Dependency injection yapan Dagger'ın komponentidir. DI işlemlerini bu interfac
 Uygulamanın müşteri arayüzü kısmını oluşturur. View binding aracılığıyla layoutu kontrol eder. Ödenecek tutarı ve QR bilgisini POSFragment'tan parametre olarak alır.<br>
 #### CustomerInfoViewModel
 Müşteri arayüzü ekranı için oluşturulmuş view model. Fragment için veritabanına erişim sunar. Aynı zamanda ödeme onaylanması için servisi tetikler.<br>
-#### CustomerInfoViewModelFactory
-CustomerInfoViewModel oluşturmak için kullanılan factory patterni temelli class.<br>
 #### HistoryRecyclerViewAdapter
 Geçmişteki ödemeleri göstermek için Recycler Viewlar kullanan adaptör.<br>
 ### DB.Payment
@@ -65,6 +63,8 @@ Geçmişteki ödemeleri göstermek için Recycler Viewlar kullanan adaptör.<br>
 ### Main
 #### MainActivity
 Fragmentları içinde barındırır ve ilk fragment olan POSFragment'ı açar.<br>
+#### ViewModelFactory
+View modelları factory patterni ile oluşturur.<br>
 ### Modules
 #### DatabaseModule
 Dependency injection sırasında gerekli olan veritabanıyla ilgili değişkenleri sağlayan class. @Singleton bu değişkenin sadece bir defa oluşturulmasını sağlar.<br>
@@ -75,5 +75,3 @@ Backend ile iletişimle ilgili olan değişkenleri DI için sağlar. SSL sertifi
 Uygulamanın ödeme alma kısmını oluşturur. Ödeme alındıktan sonra müşteri arayüzünü açmak için CustomerInfoFragment'ı ödeme miktarı ve QR verisiyle başlatır.<br>
 #### POSViewModel
 Fragmentta girilen ödeme miktarı için servise istek atar ve gelen isteğe göre QR bitmapini oluşturur.<br>
-#### POSViewModelFactory
-POSViewModel oluşturmak için kullanılan factory patterni temelli class.<br>

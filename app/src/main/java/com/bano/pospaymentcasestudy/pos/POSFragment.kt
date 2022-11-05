@@ -14,6 +14,7 @@ import com.bano.pospaymentcasestudy.api.request.QRForSale
 import com.bano.pospaymentcasestudy.base.observeOnce
 import com.bano.pospaymentcasestudy.customerInfo.CustomerInfoFragment
 import com.bano.pospaymentcasestudy.databinding.FragmentPosBinding
+import com.bano.pospaymentcasestudy.main.ViewModelFactory
 
 private const val ARG_PARAM1 = "param1"
 private const val ARG_PARAM2 = "param2"
@@ -53,7 +54,7 @@ class POSFragment : Fragment() {
 
         viewModel = ViewModelProvider(
             requireActivity(),
-            POSViewModelFactory(requireActivity().applicationContext)
+            ViewModelFactory(requireActivity().applicationContext)
         )[POSViewModel::class.java]
 
         payButton = binding.buttonPay
