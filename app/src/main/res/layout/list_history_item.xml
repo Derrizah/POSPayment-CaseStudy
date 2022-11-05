@@ -18,7 +18,7 @@
             android:layout_gravity="center"
             android:clickable="true"
             android:focusable="true"
-            app:cardBackgroundColor="@color/design_default_color_primary"
+            app:cardBackgroundColor="#3DDC84"
             app:cardCornerRadius="10dp"
             app:cardElevation="10dp" >
 
