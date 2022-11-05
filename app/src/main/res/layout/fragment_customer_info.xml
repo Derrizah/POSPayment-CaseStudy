@@ -35,7 +35,7 @@
         android:layout_width="54dp"
         android:layout_height="54dp"
         android:layout_marginTop="10dp"
-        android:src="@android:drawable/checkbox_on_background"
+        android:src="@drawable/ic_baseline_check_circle_24"
         android:visibility="invisible"
         app:layout_constraintBottom_toTopOf="@+id/button_proceed"
         app:layout_constraintEnd_toEndOf="parent"

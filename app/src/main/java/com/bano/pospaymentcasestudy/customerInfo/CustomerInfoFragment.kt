@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.commit
 import androidx.lifecycle.Observer
@@ -66,6 +67,8 @@ class CustomerInfoFragment : Fragment() {
                 if (it) {
                     binding.checkboxImage.visibility = View.VISIBLE
                     binding.progressBar.visibility = View.INVISIBLE
+
+                    Toast.makeText(activity?.applicationContext, "Ödeme Onaylandı", Toast.LENGTH_LONG).show()
                 }
             })
             viewModel.proceedPayment(qrData!!, receiptAmount!!)

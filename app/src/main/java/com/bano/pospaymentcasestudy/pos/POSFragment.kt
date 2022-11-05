@@ -1,10 +1,12 @@
 package com.bano.pospaymentcasestudy.pos
 
 import android.os.Bundle
+import android.text.TextUtils
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.commit
 import androidx.lifecycle.ViewModelProvider
@@ -21,7 +23,7 @@ private const val ARG_PARAM2 = "param2"
  */
 class POSFragment : Fragment() {
     lateinit var viewModel: POSViewModel
-    private lateinit var binding: FragmentPosBinding
+    lateinit var binding: FragmentPosBinding
 
     private lateinit var payButton: Button
     private lateinit var goToInfoButton: Button
@@ -63,12 +65,19 @@ class POSFragment : Fragment() {
 
     private fun setupPayButton() {
         payButton.setOnClickListener(View.OnClickListener {
-            activateLoading()
-            viewModel.qrImage.observeOnce(viewLifecycleOwner, androidx.lifecycle.Observer { bmp ->
-                binding.qrImage.setImageBitmap(bmp)
-                deactivateLoading()
-            })
-            viewModel.getQRCodeForSale(QRForSale(binding.editTextAmount.text.toString().toInt()))
+            val enteredAmount = binding.editTextAmount.text.toString()
+            if(TextUtils.isEmpty(enteredAmount)) {
+                binding.editTextAmount.error = "Lütfen tutar giriniz"
+            }
+            else {
+                activateLoading()
+                viewModel.qrImage.observeOnce(viewLifecycleOwner, androidx.lifecycle.Observer { bmp ->
+                    binding.qrImage.setImageBitmap(bmp)
+                    Toast.makeText(activity?.applicationContext, "QR Kod Alındı", Toast.LENGTH_LONG).show()
+                    deactivateLoading()
+                })
+                viewModel.getQRCodeForSale(QRForSale(enteredAmount.toInt()))
+            }
         })
     }
 

@@ -11,10 +11,10 @@ import javax.inject.Singleton
  * Provides variables needed for dependency injection related to database
  */
 @Module
-class DatabaseModule constructor(val context: Context) {
+open class DatabaseModule constructor(val context: Context) {
     @Singleton
     @Provides
-    fun provideYourDatabase() =
+    open fun provideDatabase() =
         Room.databaseBuilder(
             context,
             PaymentDatabase::class.java,
@@ -23,7 +23,7 @@ class DatabaseModule constructor(val context: Context) {
 
     @Singleton
     @Provides
-    fun provideYourDao(db: PaymentDatabase) =
+    open fun provideDao(db: PaymentDatabase) =
         db.getDao()
 
     @Provides

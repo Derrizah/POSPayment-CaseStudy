@@ -18,7 +18,7 @@ import okhttp3.logging.HttpLoggingInterceptor
  * Provides variables needed for dependency injection related to network
  */
 @Module
-class NetworkModule {
+open class NetworkModule {
 
     @Singleton
     @Provides
