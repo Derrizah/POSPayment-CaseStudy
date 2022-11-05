@@ -52,10 +52,12 @@ Servise gönderilen HTTP isteklerine yetkilendirme headerlarını ekleyen interc
 ### OSYServis
 Backend servisle haberleşmeyi sağlayan servis<br>
 ### Base
+#### BaseActivity
+Base Activity sınıfı. ViewBinding'e göre activity'yi hazırlar.
 #### BaseViewModel
 Base View Model sınıfı. OSY Servisi ve database repository objelerini Dagger yoluyla alıp tutar. String ile QR Bitmap oluşturma fonksiyonunu içerir. Aynı zamanda view model'daki LiveData'ların tek seferliğine observe edilmesini sağlayan extension da buradadır.<br>
 #### BaseFragment
-Base Fragment sınıfı. ViewBinding ve BaseViewModel'a göre fragmentı hazırlar. View bindingin kurulmasını ve gerekli Base View Model'in oluşturulmasını sağlar.
+Base Fragment sınıfı. ViewBinding ve BaseViewModel'a göre fragment'ı hazırlar. View bindingin kurulmasını ve gerekli Base View Model'in oluşturulmasını sağlar.
 ### Components
 #### AppComponent
 Dependency injection yapan Dagger'ın komponentidir. DI işlemlerini bu interface yapar. Kullandığı modüller @Component içinde belirtilmiştir. BaseViewModel'a enjekte eden budur.<br>
