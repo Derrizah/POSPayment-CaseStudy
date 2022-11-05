@@ -5,15 +5,11 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
-import androidx.lifecycle.viewmodel.viewModelFactory
 import androidx.viewbinding.ViewBinding
-import com.bano.pospaymentcasestudy.databinding.FragmentPosBinding
 import com.bano.pospaymentcasestudy.main.ViewModelFactory
-import com.bano.pospaymentcasestudy.pos.POSViewModel
 
-abstract class BaseFragment<VB: ViewBinding, VM: BaseViewModel> : Fragment() {
+abstract class BaseFragment<VB : ViewBinding, VM : BaseViewModel> : Fragment() {
 
     lateinit var viewModel: VM
     lateinit var binding: VB

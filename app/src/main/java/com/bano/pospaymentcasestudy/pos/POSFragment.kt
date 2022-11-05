@@ -7,15 +7,12 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.Toast
-import androidx.fragment.app.Fragment
 import androidx.fragment.app.commit
-import androidx.lifecycle.ViewModelProvider
 import com.bano.pospaymentcasestudy.api.request.QRForSale
 import com.bano.pospaymentcasestudy.base.BaseFragment
 import com.bano.pospaymentcasestudy.base.observeOnce
 import com.bano.pospaymentcasestudy.customerInfo.CustomerInfoFragment
 import com.bano.pospaymentcasestudy.databinding.FragmentPosBinding
-import com.bano.pospaymentcasestudy.main.ViewModelFactory
 
 /**
  * Fragment to receive payment amount and display QR code
@@ -38,16 +35,21 @@ class POSFragment : BaseFragment<FragmentPosBinding, POSViewModel>() {
     private fun setupPayButton() {
         payButton.setOnClickListener(View.OnClickListener {
             val enteredAmount = binding.editTextAmount.text.toString()
-            if(TextUtils.isEmpty(enteredAmount)) {
+            if (TextUtils.isEmpty(enteredAmount)) {
                 binding.editTextAmount.error = "Lütfen tutar giriniz"
-            }
-            else {
+            } else {
                 activateLoading()
-                viewModel.qrImage.observeOnce(viewLifecycleOwner, androidx.lifecycle.Observer { bmp ->
-                    binding.qrImage.setImageBitmap(bmp)
-                    Toast.makeText(activity?.applicationContext, "QR Kod Alındı", Toast.LENGTH_LONG).show()
-                    deactivateLoading()
-                })
+                viewModel.qrImage.observeOnce(
+                    viewLifecycleOwner,
+                    androidx.lifecycle.Observer { bmp ->
+                        binding.qrImage.setImageBitmap(bmp)
+                        Toast.makeText(
+                            activity?.applicationContext,
+                            "QR Kod Alındı",
+                            Toast.LENGTH_LONG
+                        ).show()
+                        deactivateLoading()
+                    })
                 viewModel.getQRCodeForSale(QRForSale(enteredAmount.toInt()))
             }
         })

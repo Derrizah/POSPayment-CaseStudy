@@ -8,8 +8,8 @@ import com.google.gson.annotations.SerializedName
 data class PostPayment(
     @SerializedName("returnCode") val returnCode: Int = 1,
     @SerializedName("returnDesc") val returnDesc: String = "success",
-    @SerializedName("receiptMsgCustomer") val receiptMsgCustomer: String = "beko Campaign/n2018",
-    @SerializedName("receiptMsgMerchant") val receiptMsgMerchant: String = "beko Campaign Merchant/n2018",
+    @SerializedName("receiptMsgCustomer") val receiptMsgCustomer: String = android.os.Build.MODEL,
+    @SerializedName("receiptMsgMerchant") val receiptMsgMerchant: String = android.os.Build.MODEL,
 //    val paymentInfoList: List<PaymentInfo>,
     @SerializedName("QRdata") val qrData: String,
 )

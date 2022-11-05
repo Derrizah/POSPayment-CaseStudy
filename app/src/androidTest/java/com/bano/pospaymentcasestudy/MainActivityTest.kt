@@ -1,4 +1,4 @@
-package com.bano.pospaymentcasestudy.pos
+package com.bano.pospaymentcasestudy
 
 import android.view.View
 import androidx.annotation.NonNull
@@ -30,7 +30,7 @@ class MainActivityTest {
             = ActivityScenarioRule(MainActivity::class.java)
 
     @Test
-    fun testPOSFragment() {
+    fun testPOSFragmentFlow() {
         onView(withId(R.id.edit_text_amount)).perform(ViewActions.typeText("100"), ViewActions.closeSoftKeyboard())
         onView(withId(R.id.button_pay)).perform(ViewActions.click())
         onView(withId(R.id.edit_text_amount)).check(ViewAssertions.matches(Matchers.not(withText(""))))
@@ -48,6 +48,7 @@ class MainActivityTest {
         Thread.sleep(1500);
         onView(withId(R.id.text_amount)).check(ViewAssertions.matches(withText(containsString(stringToBeShown))))
     }
+
     @Test
     fun testCustomerInfoFragmentPaymentHistory() {
         val stringToBeTyped = "123"

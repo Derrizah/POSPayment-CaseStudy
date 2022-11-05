@@ -1,13 +1,12 @@
-package com.bano.pospaymentcasestudy.customerInfo
+package com.bano.pospaymentcasestudy
 
 import android.content.Context
-import android.util.Log
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Observer
-import com.bano.pospaymentcasestudy.api.OSYService
 import com.bano.pospaymentcasestudy.api.request.PostPayment
 import com.bano.pospaymentcasestudy.api.response.PaymentResponse
+import com.bano.pospaymentcasestudy.customerInfo.CustomerInfoViewModel
 import com.bano.pospaymentcasestudy.db.payment.Payment
 import com.bano.pospaymentcasestudy.db.payment.PaymentRepository
 import io.reactivex.android.plugins.RxAndroidPlugins
@@ -18,11 +17,9 @@ import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
 import kotlinx.coroutines.test.StandardTestDispatcher
-import kotlinx.coroutines.test.runBlockingTest
 import kotlinx.coroutines.test.runTest
 import kotlinx.coroutines.test.setMain
 import org.junit.Before
-import org.junit.ClassRule
 import org.junit.Rule
 import org.junit.Test
 import org.junit.rules.TestRule
@@ -32,11 +29,9 @@ import org.junit.runners.model.Statement
 import org.mockito.Mock
 import org.mockito.Mockito
 import org.mockito.Mockito.mock
-import org.mockito.MockitoAnnotations
 import org.mockito.junit.MockitoJUnitRunner
 import retrofit2.Response
 import java.util.*
-import javax.inject.Inject
 
 @RunWith(MockitoJUnitRunner::class)
 class CustomerInfoViewModelTest {
@@ -71,7 +66,7 @@ class CustomerInfoViewModelTest {
 
     @ExperimentalCoroutinesApi
     @Test
-    fun verifyPaymentAdded(){
+    fun verifyPaymentAdded() {
         runTest {
             val mockQRData =
                 "00020153039495403100800201810200821912-01-2018 12:43:24830481-48608800-100#8712AT00000000018901184034178844secureqrsigniturewillbehereinthenearfuture1="

@@ -9,7 +9,6 @@ import com.bano.pospaymentcasestudy.api.response.PaymentResponse
 import com.bano.pospaymentcasestudy.base.BaseViewModel
 import com.bano.pospaymentcasestudy.db.payment.Payment
 import kotlinx.coroutines.launch
-import retrofit2.Response
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -44,13 +43,16 @@ open class CustomerInfoViewModel : BaseViewModel() {
             }
         }
     }
+
     open fun addLastPayment(amount: Int, session: String, qr: String) {
         viewModelScope.launch {
-            val payment = Payment(0,
+            val payment = Payment(
+                0,
                 amount,
                 SimpleDateFormat("MM-dd-yyyy hh:mm:ss").format(Calendar.getInstance().time),
                 session,
-                qr)
+                qr
+            )
             paymentRepository.insert(payment)
             lastInsertedPayment.postValue(payment)
         }

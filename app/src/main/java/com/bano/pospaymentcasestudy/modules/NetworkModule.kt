@@ -6,6 +6,7 @@ import com.bano.pospaymentcasestudy.api.OSYService
 import dagger.Module
 import dagger.Provides
 import okhttp3.OkHttpClient
+import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import java.security.cert.X509Certificate
@@ -13,7 +14,6 @@ import javax.inject.Singleton
 import javax.net.ssl.SSLContext
 import javax.net.ssl.TrustManager
 import javax.net.ssl.X509TrustManager
-import okhttp3.logging.HttpLoggingInterceptor
 
 /**
  * Provides variables needed for dependency injection related to network

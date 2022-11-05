@@ -5,16 +5,13 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
-import androidx.fragment.app.Fragment
 import androidx.fragment.app.commit
 import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.bano.pospaymentcasestudy.base.BaseFragment
 import com.bano.pospaymentcasestudy.base.observeOnce
 import com.bano.pospaymentcasestudy.databinding.FragmentCustomerInfoBinding
 import com.bano.pospaymentcasestudy.pos.POSFragment
-import com.bano.pospaymentcasestudy.main.ViewModelFactory
 import java.text.DecimalFormat
 
 private const val RECEIPT_AMOUNT = "RECEIPT_AMOUNT"
@@ -42,7 +39,8 @@ class CustomerInfoFragment : BaseFragment<FragmentCustomerInfoBinding, CustomerI
         super.onViewCreated(view, savedInstanceState)
 
         initRecyclerView()
-        binding.textAmount.text = "Ödenecek Tutar:\n" + DecimalFormat("#.##").format(receiptAmount!!.toDouble()/100) + " TL"
+        binding.textAmount.text =
+            "Ödenecek Tutar:\n" + DecimalFormat("#.##").format(receiptAmount!!.toDouble() / 100) + " TL"
         binding.qrImage.setImageBitmap(viewModel.getQRBitmap(qrData!!))
 
         binding.buttonProceed.setOnClickListener(View.OnClickListener {
@@ -54,7 +52,11 @@ class CustomerInfoFragment : BaseFragment<FragmentCustomerInfoBinding, CustomerI
                     binding.checkboxImage.visibility = View.VISIBLE
                     binding.progressBar.visibility = View.INVISIBLE
 
-                    Toast.makeText(activity?.applicationContext, "Ödeme Onaylandı", Toast.LENGTH_LONG).show()
+                    Toast.makeText(
+                        activity?.applicationContext,
+                        "Ödeme Onaylandı",
+                        Toast.LENGTH_LONG
+                    ).show()
                 }
             })
             viewModel.proceedPayment(qrData!!, receiptAmount!!)
