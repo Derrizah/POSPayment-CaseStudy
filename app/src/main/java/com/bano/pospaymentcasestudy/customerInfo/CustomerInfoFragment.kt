@@ -10,6 +10,7 @@ import androidx.fragment.app.commit
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.bano.pospaymentcasestudy.base.BaseFragment
 import com.bano.pospaymentcasestudy.base.observeOnce
 import com.bano.pospaymentcasestudy.databinding.FragmentCustomerInfoBinding
 import com.bano.pospaymentcasestudy.pos.POSFragment
@@ -21,10 +22,7 @@ private const val QR_DATA = "QR_DATA"
 /**
  * Fragment to approve payments and display payment history
  */
-class CustomerInfoFragment : Fragment() {
-
-    lateinit var viewModel: CustomerInfoViewModel
-    private lateinit var binding: FragmentCustomerInfoBinding
+class CustomerInfoFragment : BaseFragment<FragmentCustomerInfoBinding, CustomerInfoViewModel>() {
 
     private lateinit var adapter: HistoryRecyclerViewAdapter
 
@@ -39,22 +37,8 @@ class CustomerInfoFragment : Fragment() {
         }
     }
 
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
-        binding = FragmentCustomerInfoBinding.inflate(layoutInflater)
-        // Inflate the layout for this fragment
-        return binding.root
-    }
-
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
-        viewModel = ViewModelProvider(
-            requireActivity(),
-            ViewModelFactory(requireActivity().applicationContext)
-        )[CustomerInfoViewModel::class.java]
 
         initRecyclerView()
         binding.textAmount.text = "Ödenecek Tutar: " + receiptAmount.toString()
@@ -122,4 +106,14 @@ class CustomerInfoFragment : Fragment() {
                 }
             }
     }
+
+    override fun getViewBinding(
+        inflater: LayoutInflater,
+        container: ViewGroup?
+    ): FragmentCustomerInfoBinding {
+        return FragmentCustomerInfoBinding.inflate(inflater, container, false)
+    }
+
+    override fun getViewModelClass(): Class<CustomerInfoViewModel> =
+        CustomerInfoViewModel::class.java
 }

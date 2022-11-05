@@ -7,6 +7,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bano.pospaymentcasestudy.R
 import com.bano.pospaymentcasestudy.databinding.ListHistoryItemBinding
 import com.bano.pospaymentcasestudy.db.payment.Payment
+import java.text.DecimalFormat
 import java.util.Collections
 
 /**
@@ -46,7 +47,8 @@ class HistoryRecyclerViewAdapter : RecyclerView.Adapter<HistoryViewHolder>() {
 class HistoryViewHolder(private val binding: ListHistoryItemBinding) :
     RecyclerView.ViewHolder(binding.root) {
     fun bind(payment: Payment) {
-        binding.amountTextView.text = payment.amount.toString()
-        binding.dateTextView.text = payment.dateTime.toString()
+        binding.amountTextView.text =
+            DecimalFormat("#.##").format(payment.amount.toDouble()/100).toString()  + " TL"
+        binding.dateTextView.text = payment.dateTime
     }
 }

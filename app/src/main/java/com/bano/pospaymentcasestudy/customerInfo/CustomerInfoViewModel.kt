@@ -42,7 +42,7 @@ open class CustomerInfoViewModel() : BaseViewModel() {
                 paymentComplete.value = true
                 val payment = Payment(0,
                     receiptAmount,
-                    Date().time.toString(),
+                    Date().toString(),
                     response.body()!!.sessionID,
                     qrString)
                 paymentRepository.insert(payment)
