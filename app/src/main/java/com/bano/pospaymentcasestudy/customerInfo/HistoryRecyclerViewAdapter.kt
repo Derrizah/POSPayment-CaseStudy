@@ -48,7 +48,7 @@ class HistoryViewHolder(private val binding: ListHistoryItemBinding) :
     RecyclerView.ViewHolder(binding.root) {
     fun bind(payment: Payment) {
         binding.amountTextView.text =
-            DecimalFormat("#.##").format(payment.amount.toDouble()/100).toString()  + " TL"
+            DecimalFormat("#.##").format(payment.amount.toDouble()/100)  + " TL"
         binding.dateTextView.text = payment.dateTime
     }
 }

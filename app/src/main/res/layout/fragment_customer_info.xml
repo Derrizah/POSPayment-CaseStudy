@@ -49,6 +49,8 @@
         android:ems="10"
         android:importantForAutofill="no"
         android:minHeight="48dp"
+        android:textSize="18sp"
+        android:text="Ödenecek Tutar:\n #.## TL"
         app:layout_constraintEnd_toStartOf="@+id/button_proceed"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@+id/button_proceed" />

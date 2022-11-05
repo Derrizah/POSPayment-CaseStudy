@@ -15,6 +15,7 @@ import com.bano.pospaymentcasestudy.base.observeOnce
 import com.bano.pospaymentcasestudy.databinding.FragmentCustomerInfoBinding
 import com.bano.pospaymentcasestudy.pos.POSFragment
 import com.bano.pospaymentcasestudy.main.ViewModelFactory
+import java.text.DecimalFormat
 
 private const val RECEIPT_AMOUNT = "RECEIPT_AMOUNT"
 private const val QR_DATA = "QR_DATA"
@@ -41,7 +42,7 @@ class CustomerInfoFragment : BaseFragment<FragmentCustomerInfoBinding, CustomerI
         super.onViewCreated(view, savedInstanceState)
 
         initRecyclerView()
-        binding.textAmount.text = "Ödenecek Tutar: " + receiptAmount.toString()
+        binding.textAmount.text = "Ödenecek Tutar:\n" + DecimalFormat("#.##").format(receiptAmount!!.toDouble()/100) + " TL"
         binding.qrImage.setImageBitmap(viewModel.getQRBitmap(qrData!!))
 
         binding.buttonProceed.setOnClickListener(View.OnClickListener {
