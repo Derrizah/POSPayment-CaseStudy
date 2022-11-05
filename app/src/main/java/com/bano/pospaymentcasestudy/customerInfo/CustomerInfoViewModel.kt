@@ -10,14 +10,14 @@ import com.bano.pospaymentcasestudy.base.BaseViewModel
 import com.bano.pospaymentcasestudy.db.payment.Payment
 import kotlinx.coroutines.launch
 import retrofit2.Response
+import java.text.SimpleDateFormat
 import java.util.*
 
 /**
  * ViewModel used by CustomerInfoFragment. Handles payments and gives
  * access to payment database
  */
-open class CustomerInfoViewModel() : BaseViewModel() {
-    //    val payments = paymentRepository.payments
+open class CustomerInfoViewModel : BaseViewModel() {
     lateinit var payments: LiveData<List<Payment>>
 
     var paymentComplete: MutableLiveData<Boolean> = MutableLiveData()
@@ -40,14 +40,19 @@ open class CustomerInfoViewModel() : BaseViewModel() {
             lastResponse.postValue(response.body())
             if (response.isSuccessful) {
                 paymentComplete.value = true
-                val payment = Payment(0,
-                    receiptAmount,
-                    Date().toString(),
-                    response.body()!!.sessionID,
-                    qrString)
-                paymentRepository.insert(payment)
-                lastInsertedPayment.postValue(payment)
+                addLastPayment(receiptAmount, response.body()!!.sessionID, qrString)
             }
+        }
+    }
+    open fun addLastPayment(amount: Int, session: String, qr: String) {
+        viewModelScope.launch {
+            val payment = Payment(0,
+                amount,
+                SimpleDateFormat("MM-dd-yyyy hh:mm:ss").format(Calendar.getInstance().time),
+                session,
+                qr)
+            paymentRepository.insert(payment)
+            lastInsertedPayment.postValue(payment)
         }
     }
 }

@@ -1,5 +1,6 @@
 package com.bano.pospaymentcasestudy.modules
 
+import com.bano.pospaymentcasestudy.api.Connectivity
 import com.bano.pospaymentcasestudy.api.OSYInterceptor
 import com.bano.pospaymentcasestudy.api.OSYService
 import dagger.Module
@@ -30,7 +31,7 @@ open class NetworkModule {
     @Provides
     fun provideRetrofit(okHttpClient: OkHttpClient): Retrofit {
         return Retrofit.Builder()
-            .baseUrl("https://sandbox-api.payosy.com/api/")
+            .baseUrl(Connectivity.BASE_URL)
             .client(okHttpClient)
             .addConverterFactory(GsonConverterFactory.create())
             // We need to add converter factory to convert JSON object to Java object

@@ -1,6 +1,7 @@
 package com.bano.pospaymentcasestudy.customerInfo
 
 import android.content.Context
+import android.util.Log
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Observer
@@ -8,6 +9,7 @@ import com.bano.pospaymentcasestudy.api.OSYService
 import com.bano.pospaymentcasestudy.api.request.PostPayment
 import com.bano.pospaymentcasestudy.api.response.PaymentResponse
 import com.bano.pospaymentcasestudy.db.payment.Payment
+import com.bano.pospaymentcasestudy.db.payment.PaymentRepository
 import io.reactivex.android.plugins.RxAndroidPlugins
 import io.reactivex.plugins.RxJavaPlugins
 import io.reactivex.schedulers.Schedulers
@@ -16,6 +18,8 @@ import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
 import kotlinx.coroutines.test.StandardTestDispatcher
+import kotlinx.coroutines.test.runBlockingTest
+import kotlinx.coroutines.test.runTest
 import kotlinx.coroutines.test.setMain
 import org.junit.Before
 import org.junit.ClassRule
@@ -47,13 +51,13 @@ class CustomerInfoViewModelTest {
     private lateinit var viewModel: CustomerInfoViewModel
 
     @Mock
-    lateinit var osyService: OSYService
+    lateinit var repo: PaymentRepository
 
     @Mock
     lateinit var observer: Observer<PaymentResponse>
 
     @Mock
-    lateinit var paymentsObserver: Observer<List<Payment>>
+    lateinit var paymentsObserver: Observer<Payment>
 
     @ExperimentalCoroutinesApi
     @Before
@@ -61,13 +65,26 @@ class CustomerInfoViewModelTest {
         Dispatchers.setMain(StandardTestDispatcher())
         viewModel = CustomerInfoViewModel()
             .apply { this.inject(mock(Context::class.java)) }
-        viewModel.payments.observeForever(paymentsObserver)
+        viewModel.lastInsertedPayment.observeForever(paymentsObserver)
         viewModel.lastResponse.observeForever(observer)
     }
 
+    @ExperimentalCoroutinesApi
     @Test
-    fun verifyLastPaymentAdded(){
+    fun verifyPaymentAdded(){
+        runTest {
+            val mockQRData =
+                "00020153039495403100800201810200821912-01-2018 12:43:24830481-48608800-100#8712AT00000000018901184034178844secureqrsigniturewillbehereinthenearfuture1="
+            val mockAmount = 100
+            val mockSessionID = "12345"
+            val fakePayment = Payment(0, mockAmount, Date().toString(), mockSessionID, mockQRData)
 
+            Mockito.`when`(repo.insert(fakePayment)).then {
+                fakePayment
+            }
+            viewModel.addLastPayment(fakePayment.amount, fakePayment.sessionID, fakePayment.qrData)
+            Mockito.verify(paymentsObserver).onChanged(fakePayment)
+        }
     }
 
     @Test
@@ -83,13 +100,14 @@ class CustomerInfoViewModelTest {
 
         runBlocking {
             launch {
-                Mockito.`when`(osyService.postPayment(PostPayment(qrData = mockQRData)))
+                Mockito.`when`(viewModel.osyService.postPayment(PostPayment(qrData = mockQRData)))
                     .then {
                         fakeResponse.value
+                        println("fake response returned")
                     }
+                viewModel.proceedPayment(mockQRData, expectedAmount)
+                Mockito.verify(observer).onChanged(fakeResult.body())
             }
-            viewModel.proceedPayment(mockQRData, expectedAmount)
-            Mockito.verify(observer).onChanged(fakeResult.body())
         }
     }
 }

@@ -37,11 +37,13 @@ android {
     dataBinding {
         enabled = true
     }
-//    testOptions {
+    testOptions {
 //        unitTests.all {
 //            useTestNG()
 //        }
-//    }
+        unitTests.includeAndroidResources  = true
+        unitTests.returnDefaultValues = true
+    }
 }
 
 dependencies {
